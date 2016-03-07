@@ -38,14 +38,16 @@ object Plugin extends AutoPlugin {
   /**
    * Given the name of a JavaCpp preset library, appends the proper preset native wrapper dependencies (according to the javaCppPlatform setting)
    */
-  def javaCppPresetDependency(javaCppPresetLib: String): Def.Setting[Seq[ModuleID]] = {
+  def javaCppPresetDependency(javaCppPresetLib: String*): Def.Setting[Seq[ModuleID]] = {
     import autoImport._
     libraryDependencies <++= (javaCppPlatform, javaCppVersion, javaCppPresetsVersion) {
       (resolvedJavaCppPlatform, resolvedJavaCppVersion, resolvedJavaCppPresetsVersion) =>
-        Seq(
-          "org.bytedeco.javacpp-presets" % javaCppPresetLib % s"$resolvedJavaCppPresetsVersion-$resolvedJavaCppVersion" classifier "",
-          "org.bytedeco.javacpp-presets" % javaCppPresetLib % s"$resolvedJavaCppPresetsVersion-$resolvedJavaCppVersion" classifier resolvedJavaCppPlatform
-        )
+        javaCppPresetLib.flatMap { lib =>
+          Seq(
+            "org.bytedeco.javacpp-presets" % lib % s"$resolvedJavaCppPresetsVersion-$resolvedJavaCppVersion" classifier "",
+            "org.bytedeco.javacpp-presets" % lib % s"$resolvedJavaCppPresetsVersion-$resolvedJavaCppVersion" classifier resolvedJavaCppPlatform
+          )
+        }
     }
   }
 

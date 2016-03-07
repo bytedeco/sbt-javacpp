@@ -20,7 +20,7 @@ of adding the proper native preset for your target platform as well:
 // in build.sbt
 import import com.beachape.sbt.javacpp.{ Plugin => JavaCppPlugin }
 
-JavaCppPlugin.javaCppPresetDependency("opencv")
+JavaCppPlugin.javaCppPresetDependency("opencv", "ffmpeg")
 ```
 
 ## Customisation
