@@ -7,7 +7,7 @@ Makes it easy to start playing around with JavaCPP in an SBT project.
 In your `project/plugins.sbt`:
 
 ```scala
-addSbtPlugin("com.beachape" % "sbt-javacpp" % "1.0")
+addSbtPlugin("com.beachape" % "sbt-javacpp" % "1.1")
 ```
 
 If you want to add a dependency on a JavaCPP preset in your project, the following will do that for you, taking care
