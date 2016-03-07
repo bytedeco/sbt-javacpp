@@ -10,6 +10,28 @@ In your `project/plugins.sbt`:
 addSbtPlugin("com.beachape" % "sbt-javacpp" % "1.0")
 ```
 
+If you want to add a dependency on a JavaCPP preset in your project, the following will do that for you, taking care
+of adding the proper preset for your target platform as well:
+
+```scala
+// in build.sbt
+import import com.beachape.sbt.javacpp.{ Plugin => JavaCppPlugin }
+
+JavaCppPlugin.javaCppPresetDependency("opencv")
+```
+
+## Customisation
+
+By default, this plugin will download the appropriate binaries for the platform of the computer currently
+running SBT, you can modify this by setting it to another platform (for example, if you want to compile JARs to be run
+on other platforms)
+
+```scala
+javaCppPlatform := "android-arm"
+```
+
+Alternatively, you can set the target platform by passing a System Property: `sbt.javacpp.platform`
+
 ## Licence
 
 The MIT License (MIT)

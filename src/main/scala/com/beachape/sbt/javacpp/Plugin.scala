@@ -35,4 +35,18 @@ object Plugin extends AutoPlugin {
 
   override def trigger: PluginTrigger = allRequirements
 
+  /**
+   * Given the name of a JavaCpp preset library, appends the proper preset native wrapper dependencies (according to the javaCppPlatform setting)
+   */
+  def javaCppPresetDependency(javaCppPresetLib: String): Def.Setting[Seq[ModuleID]] = {
+    import autoImport._
+    libraryDependencies <++= (javaCppPlatform, javaCppVersion, javaCppPresetsVersion) {
+      (resolvedJavaCppPlatform, resolvedJavaCppVersion, resolvedJavaCppPresetsVersion) =>
+        Seq(
+          "org.bytedeco.javacpp-presets" % javaCppPresetLib % s"$resolvedJavaCppPresetsVersion-$resolvedJavaCppVersion" classifier "",
+          "org.bytedeco.javacpp-presets" % javaCppPresetLib % s"$resolvedJavaCppPresetsVersion-$resolvedJavaCppVersion" classifier resolvedJavaCppPlatform
+        )
+    }
+  }
+
 }
