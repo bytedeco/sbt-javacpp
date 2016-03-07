@@ -10,8 +10,11 @@ In your `project/plugins.sbt`:
 addSbtPlugin("com.beachape" % "sbt-javacpp" % "1.1")
 ```
 
-If you want to add a dependency on a JavaCPP preset in your project, the following will do that for you, taking care
-of adding the proper preset for your target platform as well:
+Adding the above line will set up your project's classpath to include `maven-plugins` as well as a add a dependency on
+the core JavaCPP library.
+
+To add a dependency on a JavaCPP preset in your project, the following snippet will do that for you, taking care
+of adding the proper native preset for your target platform as well:
 
 ```scala
 // in build.sbt
