@@ -1,6 +1,6 @@
 name := """sbt-javacpp"""
 
-version := "1.2"
+version := "1.3-SNAPSHOT"
 
 organization := "com.beachape"
 
