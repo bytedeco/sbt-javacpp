@@ -7,7 +7,7 @@ Makes it easy to start playing around with JavaCPP in an SBT project.
 In your `project/plugins.sbt`:
 
 ```scala
-addSbtPlugin("com.beachape" % "sbt-javacpp" % "1.1")
+addSbtPlugin("com.beachape" % "sbt-javacpp" % "1.2")
 ```
 
 Adding the above line will set up your project's classpath to include `maven-plugins` as well as a add a dependency on
