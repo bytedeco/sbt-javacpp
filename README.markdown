@@ -33,7 +33,12 @@ on other platforms)
 javaCppPlatform := "android-arm"
 ```
 
-Alternatively, you can set the target platform by passing a System Property: `sbt.javacpp.platform`
+Alternatively, you can set the target platform by passing a System Property: `sbt.javacpp.platform`, which means that
+you can change the target platform for your build straight from your command line.
+
+```scala
+sbt compile -Dsbt.javacpp.platform=android-arm
+```
 
 ## Licence
 
