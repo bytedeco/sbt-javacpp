@@ -18,9 +18,9 @@ of adding the proper native preset for your target platform as well:
 
 ```scala
 // in build.sbt
-import import com.beachape.sbt.javacpp.{ Plugin => JavaCppPlugin }
 
-JavaCppPlugin.javaCppPresetDependency("opencv", "ffmpeg")
+javaCppPresetLibs ++= Seq("opencv" -> "3.0.0", "ffmpeg" -> "2.8.1")
+
 ```
 
 ## Customisation

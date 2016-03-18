@@ -10,43 +10,41 @@ object Plugin extends AutoPlugin {
     import autoImport._
     Seq(
       autoCompilerPlugins := true,
-      classpathTypes += "maven-plugin", // Some dependencies like `javacpp` are packaged with maven-plugin packaging
+      classpathTypes += "maven-plugin",
       javaCppPlatform := Platform.current,
       javaCppVersion := Versions.javaCppVersion,
-      javaCppPresetsVersion := Versions.javaCppPresentsVersion,
+      javaCppPresetLibs := Seq.empty,
       libraryDependencies <+= javaCppVersion { resolvedJavaCppVersion =>
         "org.bytedeco" % "javacpp" % resolvedJavaCppVersion
-      }
+      },
+      javaCppPresetDependencies
     )
   }
 
   object Versions {
     val javaCppVersion = "1.1"
-    val javaCppPresentsVersion = "3.0.0"
   }
 
   object autoImport {
     val javaCppPlatform = SettingKey[String]("javaCppPlatform", """The platform that you want to compile for (defaults to the platform of the current computer). You can also set this via the "sbt.javacpp.platform" System Property """)
     val javaCppVersion = SettingKey[String]("javaCppVersion", s"Version of Java CPP that you want to use, defaults to ${Versions.javaCppVersion}")
-    val javaCppPresetsVersion = SettingKey[String]("javaCppPresetsVersion", s"Version of Java CPP Presets that you want to use, defaults to ${Versions.javaCppVersion}")
+    val javaCppPresetLibs = SettingKey[Seq[(String, String)]]("javaCppPresetLibs", "List of additional JavaCPP presets that you would wish to bind lazily, defaults to an empty list")
   }
 
   override def requires: Plugins = plugins.JvmPlugin
 
   override def trigger: PluginTrigger = allRequirements
 
-  /**
-   * Given the name of a JavaCpp preset library, appends the proper preset native wrapper dependencies (according to the javaCppPlatform setting)
-   */
-  def javaCppPresetDependency(javaCppPresetLib: String*): Def.Setting[Seq[ModuleID]] = {
+  private def javaCppPresetDependencies: Def.Setting[Seq[ModuleID]] = {
     import autoImport._
-    libraryDependencies <++= (javaCppPlatform, javaCppVersion, javaCppPresetsVersion) {
-      (resolvedJavaCppPlatform, resolvedJavaCppVersion, resolvedJavaCppPresetsVersion) =>
-        javaCppPresetLib.flatMap { lib =>
-          Seq(
-            "org.bytedeco.javacpp-presets" % lib % s"$resolvedJavaCppPresetsVersion-$resolvedJavaCppVersion" classifier "",
-            "org.bytedeco.javacpp-presets" % lib % s"$resolvedJavaCppPresetsVersion-$resolvedJavaCppVersion" classifier resolvedJavaCppPlatform
-          )
+    libraryDependencies <++= (javaCppPlatform, javaCppVersion, javaCppPresetLibs) {
+      (resolvedJavaCppPlatform, resolvedJavaCppVersion, resolvedJavaCppPresetLibs) =>
+        resolvedJavaCppPresetLibs.flatMap {
+          case (libName, libVersion) =>
+            Seq(
+              "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$resolvedJavaCppVersion" classifier "",
+              "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$resolvedJavaCppVersion" classifier resolvedJavaCppPlatform
+            )
         }
     }
   }
