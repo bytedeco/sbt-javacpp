@@ -1,4 +1,4 @@
-package com.beachape.sbt.javacpp
+package org.bytedeco.sbt.javacpp
 
 /**
  * Created by Lloyd on 2/22/16.

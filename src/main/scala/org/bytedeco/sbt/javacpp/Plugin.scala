@@ -1,4 +1,4 @@
-package com.beachape.sbt.javacpp
+package org.bytedeco.sbt.javacpp
 
 import scala.language.postfixOps
 import sbt._

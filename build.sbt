@@ -2,7 +2,7 @@ name := """sbt-javacpp"""
 
 version := "1.4-SNAPSHOT"
 
-organization := "com.beachape"
+organization := "org.bytedeco"
 
 sbtPlugin := true
 
@@ -23,7 +23,7 @@ publishTo <<= version { v: String =>
 }
 
 pomExtra := (
-  <url>https://github.com/lloydmeta/sbt-javacpp</url>
+  <url>https://github.com/bytedeco/sbt-javacpp</url>
     <licenses>
       <license>
         <name>MIT</name>
@@ -32,8 +32,8 @@ pomExtra := (
       </license>
     </licenses>
     <scm>
-      <url>git@github.com:lloydmeta/sbt-javacpp.git</url>
-      <connection>scm:git:git@github.com:lloydmeta/sbt-javacpp.git</connection>
+      <url>git@github.com:bytedeco/sbt-javacpp.git</url>
+      <connection>scm:git:git@github.com:bytedeco/sbt-javacpp.git</connection>
     </scm>
     <developers>
       <developer>
