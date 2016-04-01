@@ -37,7 +37,7 @@ Alternatively, you can set the target platform by passing a System Property: `sb
 you can change the target platform for your build straight from your command line.
 
 ```scala
-sbt compile -Dsbt.javacpp.platform=android-arm
+sbt compile -Dsbt.javacpp.platform="android-arm android-x86"
 ```
 
 ## Licence

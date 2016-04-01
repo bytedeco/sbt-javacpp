@@ -11,14 +11,25 @@ object Platform {
   /**
    * The platform of the machine running SBT thanks to https://github.com/chimpler/blog-scala-javacv/blob/master/build.sbt#L19
    *
-   * To override, set the "sbt.javacv.platform" System Property
+   * To override, set the "sbt.javacpp.platform" System Property. Multiple platforms can be passed as a space-separated string
+   *
+   * @example
+   * {{{
+   * sbt compile -Dsbt.javacpp.platform="android-arm android-x86"
+   * }}}
+   */
+  val current: Seq[String] = sys.props.get(platformOverridePropertyKey) match {
+    case Some(platform) if platform.trim().nonEmpty => platform.split(' ')
+    case _ => Seq(parsePlatformFromJVM)
+  }
+
+  /**
    *
    * Should be in lockstep with:
    *
    * https://github.com/bytedeco/javacpp/blob/master/src/main/java/org/bytedeco/javacpp/Loader.java#L65-L95
+   * @return
    */
-  val current: String = sys.props.getOrElse(key = platformOverridePropertyKey, default = parsePlatformFromJVM)
-
   private def parsePlatformFromJVM = {
     val jvmName = System.getProperty("java.vm.name", "").toLowerCase
     val jvmOsName = System.getProperty("os.name", "").toLowerCase
