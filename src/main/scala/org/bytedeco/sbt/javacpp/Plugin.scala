@@ -26,7 +26,7 @@ object Plugin extends AutoPlugin {
   }
 
   object autoImport {
-    val javaCppPlatform = SettingKey[String]("javaCppPlatform", """The platform that you want to compile for (defaults to the platform of the current computer). You can also set this via the "sbt.javacpp.platform" System Property """)
+    val javaCppPlatform = SettingKey[Seq[String]]("javaCppPlatform", """The platform that you want to compile for (defaults to the platform of the current computer). You can also set this via the "sbt.javacpp.platform" System Property """)
     val javaCppVersion = SettingKey[String]("javaCppVersion", s"Version of Java CPP that you want to use, defaults to ${Versions.javaCppVersion}")
     val javaCppPresetLibs = SettingKey[Seq[(String, String)]]("javaCppPresetLibs", "List of additional JavaCPP presets that you would wish to bind lazily, defaults to an empty list")
   }
@@ -38,13 +38,15 @@ object Plugin extends AutoPlugin {
   private def javaCppPresetDependencies: Def.Setting[Seq[ModuleID]] = {
     import autoImport._
     libraryDependencies <++= (javaCppPlatform, javaCppVersion, javaCppPresetLibs) {
-      (resolvedJavaCppPlatform, resolvedJavaCppVersion, resolvedJavaCppPresetLibs) =>
+      (resolvedJavaCppPlatforms, resolvedJavaCppVersion, resolvedJavaCppPresetLibs) =>
         resolvedJavaCppPresetLibs.flatMap {
-          case (libName, libVersion) =>
-            Seq(
-              "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$resolvedJavaCppVersion" classifier "",
-              "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$resolvedJavaCppVersion" classifier resolvedJavaCppPlatform
-            )
+          case (libName, libVersion) => {
+            val generic = "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$resolvedJavaCppVersion" classifier ""
+            val platformSpecific = resolvedJavaCppPlatforms.map { platform =>
+              "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$resolvedJavaCppVersion" classifier platform
+            }
+            generic +: platformSpecific
+          }
         }
     }
   }
