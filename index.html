@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>SBT-JavaCPP by bytedeco</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">SBT-JavaCPP</h1>
+      <h2 class="project-tagline">Use JavaCPP and JavaCPP preset libs in your SBT project with ease.</h2>
+      <a href="https://github.com/bytedeco/sbt-javacpp" class="btn">View on GitHub</a>
+      <a href="https://github.com/bytedeco/sbt-javacpp/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/bytedeco/sbt-javacpp/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h2>
+<a id="why" class="anchor" href="#why" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why</h2>
+
+<p>Because you want to use JavaCPP to interface with C++ libs without having to manage platform discovery and native libraries on your own.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>In your <code>project/plugins.sbt</code>:</p>
+
+<div class="highlight highlight-source-scala"><pre>addSbtPlugin(<span class="pl-s"><span class="pl-pds">"</span>org.bytedeco<span class="pl-pds">"</span></span> <span class="pl-k">%</span> <span class="pl-s"><span class="pl-pds">"</span>sbt-javacpp<span class="pl-pds">"</span></span> <span class="pl-k">%</span> <span class="pl-s"><span class="pl-pds">"</span>1.4<span class="pl-pds">"</span></span>)</pre></div>
+
+<p>Adding the above line will set up your project's classpath to include <code>maven-plugins</code> as well as a add a dependency on
+the core JavaCPP library.</p>
+
+<p>To add a dependency on a JavaCPP preset in your project, the following snippet will do that for you, taking care
+of adding the proper native preset for your target platform as well:</p>
+
+<div class="highlight highlight-source-scala"><pre><span class="pl-c">// in build.sbt</span>
+
+javaCppPresetLibs <span class="pl-k">++</span><span class="pl-k">=</span> <span class="pl-en">Seq</span>(<span class="pl-s"><span class="pl-pds">"</span>opencv<span class="pl-pds">"</span></span> <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>3.0.0<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>ffmpeg<span class="pl-pds">"</span></span> <span class="pl-k">-</span><span class="pl-k">&gt;</span> <span class="pl-s"><span class="pl-pds">"</span>2.8.1<span class="pl-pds">"</span></span>)
+</pre></div>
+
+<h2>
+<a id="customisation" class="anchor" href="#customisation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Customisation</h2>
+
+<h3>
+<a id="javacpp-version" class="anchor" href="#javacpp-version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JavaCPP Version</h3>
+
+<p>To control the version of JavaCPP you want to use:</p>
+
+<div class="highlight highlight-source-scala"><pre>javaCppVersion <span class="pl-k">:</span><span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>1.2<span class="pl-pds">"</span></span></pre></div>
+
+<p>Note that the JavaCPP presets are tied to specific versions of JavaCPP, so this will update your presets as well. </p>
+
+<h3>
+<a id="target-platform" class="anchor" href="#target-platform" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Target Platform</h3>
+
+<p>By default, this plugin will download the appropriate binaries for the platform of the computer currently
+running SBT, you can modify this by setting it to another platform (for example, if you want to compile JARs to be run
+on other platforms)</p>
+
+<div class="highlight highlight-source-scala"><pre>javaCppPlatform <span class="pl-k">:</span><span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>android-arm<span class="pl-pds">"</span></span></pre></div>
+
+<p>Alternatively, you can set the target platform by passing a System Property: <code>sbt.javacpp.platform</code>, which means that
+you can change the target platform for your build straight from your command line.</p>
+
+<div class="highlight highlight-source-scala"><pre>sbt compile <span class="pl-k">-</span><span class="pl-en">Dsbt</span>.javacpp.platform<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>android-arm android-x86<span class="pl-pds">"</span></span></pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/bytedeco/sbt-javacpp">SBT-JavaCPP</a> is maintained by <a href="https://github.com/bytedeco">bytedeco</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
