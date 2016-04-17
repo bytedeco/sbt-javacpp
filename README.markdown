@@ -1,4 +1,4 @@
-# SBT-JavaCPP
+# SBT-JavaCPP [![Join the chat at https://gitter.im/bytedeco/sbt-javacpp](https://badges.gitter.im/bytedeco/sbt-javacpp.svg)](https://gitter.im/bytedeco/sbt-javacpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Makes it easy to start playing around with JavaCPP in an SBT project.
 
