@@ -53,9 +53,9 @@ object Plugin extends AutoPlugin {
   }
 
   /**
-    * Given a version string, simply drops the patch level and returns the major-minor version only
-    * @param version
-    */
+   * Given a version string, simply drops the patch level and returns the major-minor version only
+   * @param version
+   */
   private def majorMinorOnly(version: String): String = {
     version.split('.').take(2).mkString(".")
   }
