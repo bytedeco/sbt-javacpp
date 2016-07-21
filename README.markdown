@@ -7,7 +7,7 @@ Makes it easy to start playing around with JavaCPP in an SBT project.
 In your `project/plugins.sbt`:
 
 ```scala
-addSbtPlugin("org.bytedeco" % "sbt-javacpp" % "1.6")
+addSbtPlugin("org.bytedeco" % "sbt-javacpp" % "1.6.1")
 ```
 
 Adding the above line will set up your project's classpath to include `maven-plugins` as well as a add a dependency on
@@ -19,7 +19,7 @@ of adding the proper native preset for your target platform as well:
 ```scala
 // in build.sbt
 
-javaCppPresetLibs ++= Seq("opencv" -> "3.0.0", "ffmpeg" -> "2.8.1")
+javaCppPresetLibs ++= Seq("opencv" -> "3.1.0", "ffmpeg" -> "2.8.1")
 
 ```
 

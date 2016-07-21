@@ -42,7 +42,7 @@ object Plugin extends AutoPlugin {
         val majorMinorJavaCppVersion = majorMinorOnly(resolvedJavaCppVersion)
         resolvedJavaCppPresetLibs.flatMap {
           case (libName, libVersion) => {
-            val generic = "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$resolvedJavaCppVersion" classifier ""
+            val generic = "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$majorMinorJavaCppVersion" classifier ""
             val platformSpecific = resolvedJavaCppPlatforms.map { platform =>
               "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$majorMinorJavaCppVersion" classifier platform
             }
