@@ -22,7 +22,7 @@ object Plugin extends AutoPlugin {
   }
 
   object Versions {
-    val javaCppVersion = "1.2"
+    val javaCppVersion = "1.2.2"
   }
 
   object autoImport {
@@ -39,16 +39,25 @@ object Plugin extends AutoPlugin {
     import autoImport._
     libraryDependencies <++= (javaCppPlatform, javaCppVersion, javaCppPresetLibs) {
       (resolvedJavaCppPlatforms, resolvedJavaCppVersion, resolvedJavaCppPresetLibs) =>
+        val majorMinorJavaCppVersion = majorMinorOnly(resolvedJavaCppVersion)
         resolvedJavaCppPresetLibs.flatMap {
           case (libName, libVersion) => {
             val generic = "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$resolvedJavaCppVersion" classifier ""
             val platformSpecific = resolvedJavaCppPlatforms.map { platform =>
-              "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$resolvedJavaCppVersion" classifier platform
+              "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$majorMinorJavaCppVersion" classifier platform
             }
             generic +: platformSpecific
           }
         }
     }
+  }
+
+  /**
+    * Given a version string, simply drops the patch level and returns the major-minor version only
+    * @param version
+    */
+  private def majorMinorOnly(version: String): String = {
+    version.split('.').take(2).mkString(".")
   }
 
 }
