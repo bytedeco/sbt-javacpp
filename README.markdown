@@ -7,8 +7,10 @@ Makes it easy to start playing around with JavaCPP in an SBT project.
 In your `project/plugins.sbt`:
 
 ```scala
-addSbtPlugin("org.bytedeco" % "sbt-javacpp" % "1.6.1")
+addSbtPlugin("org.bytedeco" % "sbt-javacpp" % version)
 ```
+
+For the latest `version`, see the Maven badge at the top.
 
 Adding the above line will set up your project's classpath to include `maven-plugins` as well as a add a dependency on
 the core JavaCPP library.
