@@ -1,4 +1,4 @@
-# SBT-JavaCPP [![Join the chat at https://gitter.im/bytedeco/sbt-javacpp](https://badges.gitter.im/bytedeco/sbt-javacpp.svg)](https://gitter.im/bytedeco/sbt-javacpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.bytedeco/sbt-javacpp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.bytedeco/sbt-javacpp)
+# SBT-JavaCPP [![Join the chat at https://gitter.im/bytedeco/sbt-javacpp](https://badges.gitter.im/bytedeco/sbt-javacpp.svg)](https://gitter.im/bytedeco/sbt-javacpp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.bytedeco/sbt-javacpp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.bytedeco/sbt-javacpp) [![Build Status](https://travis-ci.org/bytedeco/sbt-javacpp.svg?branch=master)](https://travis-ci.org/bytedeco/sbt-javacpp)
 
 Makes it easy to start playing around with JavaCPP in an SBT project.
 
