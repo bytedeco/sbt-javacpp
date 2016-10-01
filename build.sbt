@@ -1,6 +1,6 @@
 name := """sbt-javacpp"""
 
-version := "1.7"
+version := "1.8-SNAPSHOT"
 
 organization := "org.bytedeco"
 
