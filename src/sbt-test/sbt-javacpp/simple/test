@@ -1,2 +1,3 @@
 # Test if the project compiles
-> compile
+> test:compile
+> test
