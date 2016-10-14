@@ -10,12 +10,11 @@ object Plugin extends AutoPlugin {
     import autoImport._
     Seq(
       autoCompilerPlugins := true,
-      classpathTypes += "maven-plugin",
       javaCppPlatform := Platform.current,
       javaCppVersion := Versions.javaCppVersion,
       javaCppPresetLibs := Seq.empty,
       libraryDependencies <+= javaCppVersion { resolvedJavaCppVersion =>
-        "org.bytedeco" % "javacpp" % resolvedJavaCppVersion
+        "org.bytedeco" % "javacpp" % resolvedJavaCppVersion jar
       },
       javaCppPresetDependencies
     )
