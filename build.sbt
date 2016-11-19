@@ -1,6 +1,6 @@
 name := """sbt-javacpp"""
 
-version := "1.9-SNAPSHOT"
+version := "1.9"
 
 organization := "org.bytedeco"
 
@@ -16,9 +16,9 @@ libraryDependencies += "org.bytedeco" % "javacpp" % "1.2.5"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Xlint", "-Xlog-free-terms")
 
-publishTo <<= version { v: String =>
+publishTo := {
   val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT"))
+  if (version.value.trim.endsWith("SNAPSHOT"))
     Some("snapshots" at nexus + "content/repositories/snapshots")
   else
     Some("releases" at nexus + "service/local/staging/deploy/maven2")

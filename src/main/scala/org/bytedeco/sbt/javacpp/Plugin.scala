@@ -13,8 +13,8 @@ object Plugin extends AutoPlugin {
       javaCppPlatform := Platform.current,
       javaCppVersion := Versions.javaCppVersion,
       javaCppPresetLibs := Seq.empty,
-      libraryDependencies <+= javaCppVersion { resolvedJavaCppVersion =>
-        "org.bytedeco" % "javacpp" % resolvedJavaCppVersion jar
+      libraryDependencies += {
+        "org.bytedeco" % "javacpp" % javaCppVersion.value jar
       },
       javaCppPresetDependencies
     )
@@ -36,18 +36,17 @@ object Plugin extends AutoPlugin {
 
   private def javaCppPresetDependencies: Def.Setting[Seq[ModuleID]] = {
     import autoImport._
-    libraryDependencies <++= (javaCppPlatform, javaCppVersion, javaCppPresetLibs) {
-      (resolvedJavaCppPlatforms, resolvedJavaCppVersion, resolvedJavaCppPresetLibs) =>
-        val majorMinorJavaCppVersion = majorMinorOnly(resolvedJavaCppVersion)
-        resolvedJavaCppPresetLibs.flatMap {
-          case (libName, libVersion) => {
-            val generic = "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$majorMinorJavaCppVersion" classifier ""
-            val platformSpecific = resolvedJavaCppPlatforms.map { platform =>
-              "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$majorMinorJavaCppVersion" classifier platform
-            }
-            generic +: platformSpecific
+    libraryDependencies ++= {
+      val majorMinorJavaCppVersion = majorMinorOnly(javaCppVersion.value)
+      javaCppPresetLibs.value.flatMap {
+        case (libName, libVersion) => {
+          val generic = "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$majorMinorJavaCppVersion" classifier ""
+          val platformSpecific = javaCppPlatform.value.map { platform =>
+            "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$majorMinorJavaCppVersion" classifier platform
           }
+          generic +: platformSpecific
         }
+      }
     }
   }
 
