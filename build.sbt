@@ -1,6 +1,6 @@
 name := """sbt-javacpp"""
 
-version := "1.10-SNAPSHOT"
+version := "1.11-SNAPSHOT"
 
 organization := "org.bytedeco"
 
@@ -12,7 +12,7 @@ publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false }
 
-libraryDependencies += "org.bytedeco" % "javacpp" % "1.2.5"
+libraryDependencies += "org.bytedeco" % "javacpp" % "1.3.1"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Xlint", "-Xlog-free-terms")
 
