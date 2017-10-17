@@ -8,11 +8,22 @@ sbtPlugin := true
 
 publishMavenStyle := true
 
+scalaVersion := "2.12.3"
+
+sbtVersion in Global := "1.0.2"
+
+crossSbtVersions := Vector("0.13.16", "1.0.2")
+
+scalaCompilerBridgeSource := {
+  val sv = appConfiguration.value.provider.id.version
+  ("org.scala-sbt" % "compiler-interface" % sv % "component").sources
+}
+
 publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false }
 
-libraryDependencies += "org.bytedeco" % "javacpp" % "1.3.1"
+libraryDependencies += "org.bytedeco" % "javacpp" % "1.3.3"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Xlint", "-Xlog-free-terms")
 
