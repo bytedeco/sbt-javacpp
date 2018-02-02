@@ -1,6 +1,6 @@
 name := """sbt-javacpp"""
 
-version := "1.12-SNAPSHOT"
+version := "1.12"
 
 organization := "org.bytedeco"
 
@@ -8,11 +8,11 @@ sbtPlugin := true
 
 publishMavenStyle := true
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.12.4"
 
-sbtVersion in Global := "1.0.2"
+sbtVersion in Global := "1.0.4"
 
-crossSbtVersions := Vector("0.13.16", "1.0.2")
+crossSbtVersions := Vector("0.13.17", "1.0.4")
 
 scalaCompilerBridgeSource := {
   val sv = appConfiguration.value.provider.id.version
