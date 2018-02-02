@@ -21,7 +21,7 @@ of adding the proper native preset for your target platform as well:
 ```scala
 // in build.sbt
 
-javaCppPresetLibs ++= Seq("opencv" -> "3.1.0", "ffmpeg" -> "3.1.2")
+javaCppPresetLibs ++= Seq("opencv" -> "3.4.0", "ffmpeg" -> "3.4.1")
 
 ```
 

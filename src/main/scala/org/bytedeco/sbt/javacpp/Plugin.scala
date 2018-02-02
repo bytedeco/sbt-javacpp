@@ -21,7 +21,7 @@ object Plugin extends AutoPlugin {
   }
 
   object Versions {
-    val javaCppVersion = "1.3.1"
+    val javaCppVersion = "1.4"
   }
 
   object autoImport {
