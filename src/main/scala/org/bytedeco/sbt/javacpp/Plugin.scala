@@ -18,8 +18,7 @@ object Plugin extends AutoPlugin {
       libraryDependencies += {
         "org.bytedeco" % "javacpp" % javaCppVersion.value jar
       },
-      javaCppPresetDependencies
-    )
+      javaCppPresetDependencies)
   }
 
   object Versions {
@@ -39,7 +38,7 @@ object Plugin extends AutoPlugin {
   private def javaCppPresetDependencies: Def.Setting[Seq[ModuleID]] = {
     import autoImport._
     libraryDependencies ++= {
-      val cppPresetVersion = majorMinorOnly(javaCppVersion.value)
+      val cppPresetVersion = buildPresetVersion(javaCppVersion.value)
       javaCppPresetLibs.value.flatMap {
         case (libName, libVersion) =>
           val generic = "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$cppPresetVersion" classifier ""
@@ -60,7 +59,7 @@ object Plugin extends AutoPlugin {
    *
    * @param version eg. "1.4.2"
    */
-  private def majorMinorOnly(version: String): String =
+  private def buildPresetVersion(version: String): String =
     version match {
       case VersionSplit(a :: b :: _) if a < 2 & b < 4 => s"$a.$b"
       case VersionSplit(_) => version
