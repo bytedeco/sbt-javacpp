@@ -1,4 +1,4 @@
-name := """sbt-javacpp"""
+name := "sbt-javacpp"
 
 version := "1.14-SNAPSHOT"
 
@@ -8,11 +8,11 @@ sbtPlugin := true
 
 publishMavenStyle := true
 
-scalaVersion := "2.12.4"
+scalaVersion in Global := "2.12.8"
 
-sbtVersion in Global := "1.0.4"
+sbtVersion in Global := "1.2.7"
 
-crossSbtVersions := Vector("0.13.17", "1.0.4")
+crossSbtVersions := Vector("0.13.17", "1.2.7")
 
 scalaCompilerBridgeSource := {
   val sv = appConfiguration.value.provider.id.version
@@ -23,7 +23,7 @@ publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false }
 
-libraryDependencies += "org.bytedeco" % "javacpp" % "1.4"
+libraryDependencies += "org.bytedeco" % "javacpp" % "1.4.3"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Xlint", "-Xlog-free-terms")
 
@@ -35,7 +35,7 @@ publishTo := {
     Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-pomExtra := (
+pomExtra :=
   <url>https://github.com/bytedeco/sbt-javacpp</url>
     <licenses>
       <license>
@@ -55,4 +55,3 @@ pomExtra := (
         <url>https://beachape.com</url>
       </developer>
     </developers>
-  )
