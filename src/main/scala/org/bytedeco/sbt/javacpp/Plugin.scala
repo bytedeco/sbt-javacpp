@@ -22,7 +22,7 @@ object Plugin extends AutoPlugin {
   }
 
   object Versions {
-    val javaCppVersion = "1.4.3"
+    val javaCppVersion = "1.5.3"
   }
 
   object autoImport {
@@ -38,12 +38,12 @@ object Plugin extends AutoPlugin {
   private def javaCppPresetDependencies: Def.Setting[Seq[ModuleID]] = {
     import autoImport._
     libraryDependencies ++= {
-      val cppPresetVersion = buildPresetVersion(javaCppVersion.value)
+      val (cppPresetVersion, groupId) = buildPresetVersion(javaCppVersion.value)
       javaCppPresetLibs.value.flatMap {
         case (libName, libVersion) =>
-          val generic = "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$cppPresetVersion" classifier ""
+          val generic = groupId % libName % s"$libVersion-$cppPresetVersion" classifier ""
           val platformSpecific = javaCppPlatform.value.map { platform =>
-            "org.bytedeco.javacpp-presets" % libName % s"$libVersion-$cppPresetVersion" classifier platform
+            groupId % libName % s"$libVersion-$cppPresetVersion" classifier platform
           }
           generic +: platformSpecific
       }
@@ -59,11 +59,11 @@ object Plugin extends AutoPlugin {
    *
    * @param version eg. "1.4.2"
    */
-  private def buildPresetVersion(version: String): String =
+  private def buildPresetVersion(version: String): (String, String) =
     version match {
-      case VersionSplit(a :: b :: _) if a < 2 & b < 4 => s"$a.$b"
-      case VersionSplit(_) => version
-      case _ => throw new IllegalArgumentException("Version format not recognized")
+      case VersionSplit(a :: b :: _) if a == 0 || (a == 1 && b <= 3) => (s"$a.$b", "org.bytedeco.javacpp-presets")
+      case VersionSplit(1 :: 4 :: _) => (version, "org.bytedeco.javacpp-presets")
+      case _ => (version, "org.bytedeco")
     }
 
   private object VersionSplit {
