@@ -15,13 +15,16 @@ For the latest `version`, see the Maven badge at the top.
 Adding the above line will set up your project's classpath to include `maven-plugins` as well as a add a dependency on
 the core JavaCPP library.
 
+Due to the sbt limitation, add ```fork := true``` to ```build.sbt```.
+
 To add a dependency on a JavaCPP preset in your project, the following snippet will do that for you, taking care
-of adding the proper native preset for your target platform as well:
+of adding the proper native preset for your target platform as well. Remove ```-platform``` from the ```artifactId```:
 
 ```scala
 // in build.sbt
 
-javaCppPresetLibs ++= Seq("opencv" -> "3.4.0", "ffmpeg" -> "3.4.1")
+javaCppPresetLibs ++= Seq("opencv" -> "4.3.0", "opencv-gpu" -> "4.3.0", "mkl-redist" -> "2020.1")
+fork := true
 
 ```
 

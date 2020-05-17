@@ -5,6 +5,7 @@ import sbt._
 import sbt.Keys._
 
 import scala.util.Try
+import scala.util.matching.Regex
 
 object Plugin extends AutoPlugin {
 
@@ -41,9 +42,17 @@ object Plugin extends AutoPlugin {
       val (cppPresetVersion, groupId) = buildPresetVersion(javaCppVersion.value)
       javaCppPresetLibs.value.flatMap {
         case (libName, libVersion) =>
-          val generic = groupId % libName % s"$libVersion-$cppPresetVersion" classifier ""
+          implicit class RegexOps(sc: StringContext) {
+            def r = new Regex(sc.parts.mkString, sc.parts.tail.map(_ => "x"): _*)
+          }
+          val (libNamePrefix, libNamePostfix) = libName match {
+            case r"([^-]+)$prefix(-.+)$postfix" => (prefix, postfix)
+            case _ => (libName, "")
+          }
+
+          val generic = groupId % libNamePrefix % s"$libVersion-$cppPresetVersion" classifier ""
           val platformSpecific = javaCppPlatform.value.map { platform =>
-            groupId % libName % s"$libVersion-$cppPresetVersion" classifier platform
+            groupId % libNamePrefix % s"$libVersion-$cppPresetVersion" classifier s"$platform$libNamePostfix"
           }
           generic +: platformSpecific
       }
