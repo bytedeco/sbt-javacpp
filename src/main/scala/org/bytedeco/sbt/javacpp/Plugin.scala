@@ -1,6 +1,5 @@
 package org.bytedeco.sbt.javacpp
 
-import scala.language.postfixOps
 import sbt._
 import sbt.Keys._
 
@@ -16,14 +15,18 @@ object Plugin extends AutoPlugin {
       javaCppPlatform := Platform.current,
       javaCppVersion := Versions.javaCppVersion,
       javaCppPresetLibs := Seq.empty,
-      libraryDependencies += {
-        "org.bytedeco" % "javacpp" % javaCppVersion.value jar
+      libraryDependencies ++= "org.bytedeco" % "javacpp" % javaCppVersion.value +: {
+        if (isVersionGreaterThanEqual(javaCppVersion.value, 1, 5, 3)) {
+          javaCppPlatform.value.map { platform =>
+            "org.bytedeco" % "javacpp" % javaCppVersion.value classifier platform
+          }
+        } else Seq.empty
       },
       javaCppPresetDependencies)
   }
 
   object Versions {
-    val javaCppVersion = "1.5.3"
+    val javaCppVersion = "1.5.4"
   }
 
   object autoImport {
@@ -74,6 +77,19 @@ object Plugin extends AutoPlugin {
       case VersionSplit(1 :: 4 :: _) => (version, "org.bytedeco.javacpp-presets")
       case _ => (version, "org.bytedeco")
     }
+
+  private def isVersionGreaterThanEqual(version: String, major: Int, minor: Int, patch: Int): Boolean = {
+    if (version.endsWith("-SNAPSHOT")) {
+      true
+    } else {
+      version match {
+        case VersionSplit(a :: b :: c :: _) =>
+          (a == major && b == minor && c >= patch) || (a == major && b > minor) || a > major
+        case VersionSplit(a :: b :: _) =>
+          (a == major && b == minor && 0 == patch) || (a == major && b > minor) || a > major
+      }
+    }
+  }
 
   private object VersionSplit {
     def unapply(arg: String): Option[List[Int]] =

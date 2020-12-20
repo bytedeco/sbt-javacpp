@@ -23,7 +23,7 @@ of adding the proper native preset for your target platform as well. Remove ```-
 ```scala
 // in build.sbt
 
-javaCppPresetLibs ++= Seq("opencv" -> "4.3.0", "opencv-gpu" -> "4.3.0", "mkl-redist" -> "2020.1")
+javaCppPresetLibs ++= Seq("opencv" -> "4.4.0", "opencv-gpu" -> "4.4.0", "mkl-redist" -> "2020.3")
 fork := true
 
 ```

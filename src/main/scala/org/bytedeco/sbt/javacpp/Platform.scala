@@ -20,7 +20,7 @@ object Platform {
    */
   val current: Seq[String] = sys.props.get(platformOverridePropertyKey) match {
     case Some(platform) if platform.trim().nonEmpty => platform.split(' ')
-    case _ => Seq(Loader.getPlatform)
+    case _ => Seq(Loader.Detector.getPlatform)
   }
 
 }
